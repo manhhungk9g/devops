@@ -1,1 +1,51 @@
+1. Node information
+Name	        IP
+openstack-15	20.0.1.15
+openstack-16	20.0.1.16
+openstack-17	20.0.1.17
 
+2. Configuration 
+openstack-15:
+ETCD_INITIAL_CLUSTER="openstack-15=http://20.0.1.15:2380,openstack-16=http://20.0.1.16:2380,openstack-17=http://20.0.1.17:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-01"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://20.0.1.15:2380,http://127.0.0.1:7001"
+ETCD_DATA_DIR="/var/lib/etcd"
+ETCD_LISTEN_PEER_URLS="http://20.0.1.15:2380,http://127.0.0.1:7001"
+ETCD_LISTEN_CLIENT_URLS="http://20.0.1.15:2379,http://127.0.0.1:4001"
+ETCD_ADVERTISE_CLIENT_URLS="http://20.0.1.15:2379,http://127.0.0.1:4001"
+ETCD_NAME="openstack-15"
+
+openstack-16:
+ETCD_INITIAL_CLUSTER="openstack-15=http://20.0.1.15:2380,openstack-16=http://20.0.1.16:2380,openstack-17=http://20.0.1.17:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-01"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://20.0.1.15:2380"
+ETCD_DATA_DIR="/var/lib/etcd"
+ETCD_LISTEN_PEER_URLS="http://20.0.1.16:2380,http://127.0.0.1:7001"
+ETCD_LISTEN_CLIENT_URLS="http://20.0.1.16:2379,http://127.0.0.1:4001"
+ETCD_ADVERTISE_CLIENT_URLS="http://20.0.1.16:2379,http://127.0.0.1:4001"
+ETCD_NAME="openstack-16"
+
+openstack-17:
+ETCD_INITIAL_CLUSTER="openstack-15=http://20.0.1.15:2380,openstack-16=http://20.0.1.16:2380,openstack-17=http://20.0.1.17:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-01"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://20.0.1.15:2380"
+ETCD_DATA_DIR="/var/lib/etcd"
+ETCD_LISTEN_PEER_URLS="http://20.0.1.17:2380,http://127.0.0.1:7001"
+ETCD_LISTEN_CLIENT_URLS="http://20.0.1.17:2379,http://127.0.0.1:4001"
+ETCD_ADVERTISE_CLIENT_URLS="http://20.0.1.17:2379,http://127.0.0.1:4001"
+ETCD_NAME="openstack-17"
+
+3. Verify installation
+# etcdctl cluster-health
+member 3db0bc42562d16b is healthy: got healthy result from http://127.0.0.1:4001
+member 63c1e9e83a9e6886 is healthy: got healthy result from http://127.0.0.1:4001
+member c0dd6f17a743186b is healthy: got healthy result from http://127.0.0.1:4001
+cluster is healthy
+
+# etcdctl member list
+3db0bc42562d16b: name=openstack-15 peerURLs=http://20.0.1.15:2380 clientURLs=http://127.0.0.1:4001,http://20.0.1.15:2379
+63c1e9e83a9e6886: name=openstack-16 peerURLs=http://20.0.1.16:2380 clientURLs=http://127.0.0.1:4001,http://20.0.1.16:2379
+c0dd6f17a743186b: name=openstack-17 peerURLs=http://20.0.1.17:2380 clientURLs=http://127.0.0.1:4001,http://20.0.1.17:2379
