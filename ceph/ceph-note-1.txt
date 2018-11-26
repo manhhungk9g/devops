@@ -104,6 +104,16 @@ Ceph install note : Ceph luminous with OpenStack Mitaka
 	+ sudo systemctl start ceph-osd@<id>
 	+ sudo systemctl start ceph.target
 	
+- When using ceph with openstack, step copy config ceph to openstack node : 
+cephuser@ceph-admin:~/ceph-cluster$ ssh scloud@20.0.1.15 sudo tee /etc/ceph/ceph.conf </etc/ceph/ceph.conf
+scloud@20.0.1.15's password:
+sudo: no tty present and no askpass program specified
+===> create ceph user on openstack nodes and add it to sudoer file : 
+ useradd -d /home/cephuser -m cephuser
+ passwd cephuser
+
+ echo "cephuser ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/cephuser
+ chmod 0440 /etc/sudoers.d/cephuser
 
 - Ceph command : 
 1. Check or watch cluster health: ceph status || ceph -w
